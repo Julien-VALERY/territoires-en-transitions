@@ -64,6 +64,51 @@ Added "domaine/fonctionnalite" to sqitch.plan
 ```
 
 
+### Modifier une fonctionnalité existante 
+
+0 - Lire la doc 
+https://sqitch.org/docs/manual/sqitch-rework/
+
+1 - Utiliser la commande "rework" 
+
+Avec sqitch en local :
+```shell
+sqitch domaine/fonctionnalite
+```
+
+Avec docker compose :
+```shell
+docker compose run --no-deps sqitch domaine/fonctionnalite
+```
+
+Le résultat devrait être :
+```
+Modify deploy/domaine/fonctionnalite.sql
+Modify revert/domaine/fonctionnalite.sql
+Modify verify/domaine/fonctionnalite.sql
+Created deploy/domaine/fonctionnalite@x.y.z.sql
+Created revert/domaine/fonctionnalite@x.y.z.sql
+Created verify/domaine/fonctionnalite@x.y.z.sql
+Added "domaine/fonctionnalite@x.y.z" to sqitch.plan
+```
+
+Le plan sqitch déploiera d'abord domaine/fonctionnalitee@x.y.z (l'ancienne version...) si ça n'a pas déjà été fait puis domaine/fonctionnalite (la nouvelle version !)
+
+Si on regarde un peu les fichiers, ce qui s'est passé, c'est : 
+- Les anciennes versions deploy, revert et verify de notre fonctionnalite ont été taggué @x.y.z.
+- La nouvelle version se trouve dans les fichiers sans tag
+- Le "nouveau revert" consiste à restaurer l'ancienne version de la fonctionnalité, donc contient le code qui permettait de la deployer (c.à.d : le code de revert/domaine/fonctionnalite est celui de deploy/domaine/fonctionnalite@x.y.z)
+
+2 - Faire la modification 
+
+- DEPLOY : La migration est à écrire dans le fichier deploy/domaine/fonctionnalite.sql. Attention, il ne s'agit pas de TOUT redéployer mais d'éditer (create or update ...) uniquement les vues, tables, fonctions nécessaires à la modification. 
+- REVERT : Le revert de la modification est à écrire dans le fichier revert/domaine/fonctionnalite. Le but est de restaurer la version précédente de la base, c'est à dire d'annuler la modification qui a eu lieu dans le fichier deploy/domaine/fonctionnalite.sql. Ainsi, on édite le fichier revert/domaine/fonctionnalite afin de ne garder que la restauration nécessaire. 
+
+3 - Vérifier que tout ira bien en prod'
+- Retourner à la version précédente : `sqitch revert --to @x.y.z`
+- Déployer la modification à partir de là : `sqitch deploy`
+- Lancer les tests du data-later : `docker compose run datalayer-test` 
+
 ## Créer un projet sur Supabase
 Après la création du projet
 - Mettre à jour `Site URL` dans `auth/settings` avec l'url du front.
