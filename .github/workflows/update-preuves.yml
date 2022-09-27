@@ -22,7 +22,14 @@ jobs:
       - name: Execute parsing scripts to generate JSON files in data_layer/content
         run: docker compose run --no-deps business-parse-preuves
 
-      # TODO : check that data_layer can 
+      # TODO : check that data_layer can
+      # Copy all projet .sample.env into .env with the variables
+      - name: Make .env files
+        run: sh make_dot_env.sh
+
+      # Run content update container.
+      - name: Load content in datalayer
+        run: docker-compose run loader_2
 
       # Commit changes
       - name: Commit generated JSON files
