@@ -4,6 +4,10 @@ on:
   push:
     paths:
       - "markdown/preuves/*.md"
+  pull_request:
+    branches-ignore:
+      - production
+      - production-static
 
 jobs:
   parse-preuves:
