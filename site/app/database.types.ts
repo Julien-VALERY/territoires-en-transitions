@@ -537,7 +537,7 @@ export interface Database {
         Returns: undefined;
       };
       ajouter_annexe: {
-        Args: {annexe: unknown; fiche_id: number};
+        Args: {annexe: unknown};
         Returns: unknown;
       };
       ajouter_fiche_action_dans_un_axe: {
@@ -769,10 +769,6 @@ export interface Database {
       };
       enlever_action: {
         Args: {action_id: unknown; fiche_id: number};
-        Returns: undefined;
-      };
-      enlever_annexe: {
-        Args: {annexe: unknown; fiche_id: number; supprimer: boolean};
         Returns: undefined;
       };
       enlever_fiche_action_d_un_axe: {
@@ -1446,19 +1442,19 @@ export interface Database {
             Returns: string;
           }
         | {
-            Args: {bucket_width: unknown; ts: string};
-            Returns: string;
-          }
-        | {
-            Args: {bucket_width: unknown; ts: string};
-            Returns: string;
-          }
-        | {
-            Args: {bucket_width: unknown; ts: string};
-            Returns: string;
-          }
-        | {
             Args: {bucket_width: unknown; origin: string; ts: string};
+            Returns: string;
+          }
+        | {
+            Args: {bucket_width: unknown; ts: string};
+            Returns: string;
+          }
+        | {
+            Args: {bucket_width: unknown; ts: string};
+            Returns: string;
+          }
+        | {
+            Args: {bucket_width: unknown; ts: string};
             Returns: string;
           }
         | {
@@ -1861,6 +1857,7 @@ export interface Database {
         Insert: {
           collectivite_id: number;
           commentaire?: string;
+          fiche_id: number;
           fichier_id?: number | null;
           id?: number;
           lien?: Json | null;
@@ -1872,6 +1869,7 @@ export interface Database {
         Row: {
           collectivite_id: number;
           commentaire: string;
+          fiche_id: number;
           fichier_id: number | null;
           id: number;
           lien: Json | null;
@@ -1883,6 +1881,7 @@ export interface Database {
         Update: {
           collectivite_id?: number;
           commentaire?: string;
+          fiche_id?: number;
           fichier_id?: number | null;
           id?: number;
           lien?: Json | null;
@@ -2227,20 +2226,6 @@ export interface Database {
         };
         Update: {
           action_id?: string;
-          fiche_id?: number;
-        };
-      };
-      fiche_action_annexe: {
-        Insert: {
-          annexe_id: number;
-          fiche_id: number;
-        };
-        Row: {
-          annexe_id: number;
-          fiche_id: number;
-        };
-        Update: {
-          annexe_id?: number;
           fiche_id?: number;
         };
       };
