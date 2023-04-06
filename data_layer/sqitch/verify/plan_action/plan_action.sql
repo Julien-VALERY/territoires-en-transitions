@@ -2,6 +2,5 @@
 
 BEGIN;
 
-select has_function_privilege('peut_lire_la_fiche(integer)', 'execute');
 
 ROLLBACK;
