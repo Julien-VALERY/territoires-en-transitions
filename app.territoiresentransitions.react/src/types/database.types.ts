@@ -404,8 +404,16 @@ export interface Database {
       collectivite_filtre_type: 'population' | 'score' | 'remplissage';
       fiche_action_cibles:
         | 'Grand public et associations'
+        | '   Public Scolaire'
         | 'Autres collectivités du territoire'
-        | 'Acteurs économiques';
+        | 'Acteurs économiques'
+        | '   Acteurs économiques du secteur primaire'
+        | '   Acteurs économiques du secteur secondaire'
+        | '   Acteurs économiques du secteur tertiaire'
+        | 'Partenaires'
+        | 'Collectivité elle-même'
+        | '   Elus locaux'
+        | '   Agents';
       fiche_action_niveaux_priorite: 'Élevé' | 'Moyen' | 'Bas';
       fiche_action_piliers_eci:
         | 'Approvisionnement durable'
@@ -2247,52 +2255,52 @@ export interface Database {
         | {
             Args: {
               bucket_width: unknown;
-              origin: string;
-              ts: string;
-            };
-            Returns: string;
-          }
-        | {
-            Args: {
-              bucket_width: unknown;
-              ts: string;
-            };
-            Returns: string;
-          }
-        | {
-            Args: {
-              bucket_width: unknown;
-              ts: string;
-            };
-            Returns: string;
-          }
-        | {
-            Args: {
-              bucket_width: unknown;
-              ts: string;
-            };
-            Returns: string;
-          }
-        | {
-            Args: {
-              bucket_width: unknown;
-              origin: string;
-              ts: string;
-            };
-            Returns: string;
-          }
-        | {
-            Args: {
-              bucket_width: unknown;
-              origin: string;
-              ts: string;
-            };
-            Returns: string;
-          }
-        | {
-            Args: {
-              bucket_width: unknown;
               offset: unknown;
+              ts: string;
+            };
+            Returns: string;
+          }
+        | {
+            Args: {
+              bucket_width: unknown;
+              ts: string;
+            };
+            Returns: string;
+          }
+        | {
+            Args: {
+              bucket_width: unknown;
+              ts: string;
+            };
+            Returns: string;
+          }
+        | {
+            Args: {
+              bucket_width: unknown;
+              ts: string;
+            };
+            Returns: string;
+          }
+        | {
+            Args: {
+              bucket_width: unknown;
+              origin: string;
+              ts: string;
+            };
+            Returns: string;
+          }
+        | {
+            Args: {
+              bucket_width: unknown;
+              origin: string;
+              ts: string;
+            };
+            Returns: string;
+          }
+        | {
+            Args: {
+              bucket_width: unknown;
+              origin: string;
               ts: string;
             };
             Returns: string;
@@ -5117,8 +5125,10 @@ export interface Database {
       retool_audit: {
         Row: {
           collectivite_id: number | null;
+          date_attribution: string | null;
           date_debut: string | null;
           date_fin: string | null;
+          envoyee_le: string | null;
           nom: string | null;
           referentiel: Database['public']['Enums']['referentiel'] | null;
           type_audit: string | null;
@@ -5165,10 +5175,13 @@ export interface Database {
           collectivite_id: number | null;
           date: string | null;
           en_cours: boolean | null;
+          envoyee_le: string | null;
           etoiles: Database['labellisation']['Enums']['etoile'] | null;
           id: number | null;
+          modified_at: string | null;
           nom: string | null;
           referentiel: Database['public']['Enums']['referentiel'] | null;
+          sujet: Database['labellisation']['Enums']['sujet_demande'] | null;
         };
       };
       retool_plan_action_hebdo: {
